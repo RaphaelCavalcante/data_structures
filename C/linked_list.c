@@ -6,13 +6,18 @@
 *****************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #define SIZE 10
+#define TRUE 1
+#define FALSE 0
 
 int static buff=0;
+
 typedef struct node t_node;
 struct node{
 	int value;
 	t_node *next;
+	t_node *prev;
 };
 typedef struct list t_list;
 struct list{
@@ -37,6 +42,7 @@ t_node *create_node(int value){
 	t_node *node=(t_node *)malloc(sizeof(t_node));
 	node->value=value;
 	node->next=NULL;
+	node->prev=NULL;
 return node;
 }
 /**
@@ -48,6 +54,7 @@ void add_on_end(t_list *list, t_node *node){
 		list->end=node;
 	}else{
 		list->end->next=node;
+		node->prev=list->end;
 		list->end=node;
 	}
 	list->size++;
@@ -96,6 +103,28 @@ int sum_them_all_re(t_list *list, t_node *node){
 	}else{
 		sum_them_all_re(list, node->next);
 	}
+}
+/**
+* Binary search, should return true 
+*/
+bool binary_search(t_list *list, int x){
+	t_node *start, *end;
+	bool found=FALSE;
+	if(list==NULL){
+		printf("Empty list");
+		exit(1);
+	}
+	start= list->start;
+	end=list->end;
+
+	while((start->next != NULL) || (end->prev != NULL)){
+		if((end->value==x) || (start->value==x)){
+			found = TRUE;
+		}
+		start=start->next;
+		end=end->prev;
+	}
+return found;
 }
 /**
 *print list recursive mode
@@ -152,6 +181,9 @@ int main(){
 	
 		printf("\nSum: %d\n", sum_them_all_re(list, list->start));
 		
+		if(binary_search(list, 9)){
+			printf("Achou\n");
+		}
 		free(list);
 	}
 return 0;
