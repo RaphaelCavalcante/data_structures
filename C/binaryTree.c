@@ -10,8 +10,8 @@
 #define SIZE 10
 #define TRUE 1
 #define FALSE 0
-//TEST >>> 10, 20, 5 , 40, 2, 7
-int static buff=0;
+//TEST >>> 50,100,25,150,75,35,15,20,85,10
+
 
 typedef struct node t_node;
 struct node{
@@ -23,6 +23,7 @@ struct node{
 /**
 * Create a tree node from a integer
 **
+*/
 t_node *create_root(int elem){
     t_node *root;
     root=(t_node *)malloc(sizeof (t_node));
@@ -45,7 +46,7 @@ return root;
 * if lesser.
 */
 t_node *insert_tree(t_node *tree, int elem){
-    t_node *leaf;
+    t_node *leaf=NULL;
     if(tree==NULL){
         tree=create_root(elem);
     }else{
@@ -75,20 +76,80 @@ return tree;
 * build using the array elements, then the root value is returned.
 */
 int given_array_get_root(int array[]){
-    t_node *root;
+    t_node *root=NULL;
     int i;
-    for(i=0;i<(sizeof(array)/4);i++)
+    for(i=0;i<SIZE;i++)
     {
         root=insert_tree(root, array[i]);
     }
 return root->value;
+}
+
+t_node *array_to_tree(int array[]){
+    t_node *root=NULL;
+    int i;
+    for(i=0;i<SIZE;i++)
+    {
+        root=insert_tree(root, array[i]);
+    }
+return root;
+}
+/**
+* print tree in post order
+*/
+void print_tree_post_order(t_node *tree){
+	if(tree == NULL){
+		return;
+	}
+
+	if(tree->left != NULL){
+		print_tree_post_order(tree->left);
+	}
+	if(tree->right != NULL){
+		print_tree_post_order(tree->right);
+	}
+	printf("%d\n", tree->value);
+}
+
+/**
+* print tree in in order
+*/
+void print_tree_in_order(t_node *tree){
+	if(tree==NULL){
+		return;
+	}
+	if(tree->left!=NULL){
+		print_tree_in_order(tree->left);
+	}
+	printf("%d\n", tree->value);
+	if(tree->right!=NULL){
+		print_tree_in_order(tree->right);
+	}
+}
+/**
+*print tree pre order
+*/
+void print_tree_pre_order (t_node *tree){
+	if(tree==NULL){
+		return;
+	}
+	printf("%d\n", tree->value);
+	if(tree->left!=NULL){
+		print_tree_pre_order(tree->left);
+	}
+	if(tree->right!=NULL){
+		print_tree_pre_order(tree->right);
+	}
 }
 /************
 *  MAIN     *
 *************/
 int main(int argc, char *argv[]){
     t_node *tree=NULL;
-    int array[]={10, 20, 5 , 40, 2, 7};
-    printf("%d", given_array_get_root(array));
+    int array[SIZE]={50,100,25,150,75,35,15,20,85,10};
+	tree= array_to_tree(array);	
+//	print_tree(tree);
+	print_tree_in_order(tree);
+//    printf("%d", given_array_get_root(array));
 
 }
