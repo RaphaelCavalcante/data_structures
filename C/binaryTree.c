@@ -70,7 +70,12 @@ t_node *insert_tree(t_node *tree, int elem){
     }
 return tree;
 }
-
+/**
+*Remove leaf
+*/
+void remove_left_leaf(t_node *node, int element){
+	
+}
 /**
 * Returns the value of the root element, given an array. First the tree is
 * build using the array elements, then the root value is returned.
@@ -85,6 +90,9 @@ int given_array_get_root(int array[]){
 return root->value;
 }
 
+/**
+* Get an array and returns an tree node
+*/
 t_node *array_to_tree(int array[]){
     t_node *root=NULL;
     int i;
