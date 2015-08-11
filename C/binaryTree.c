@@ -135,6 +135,27 @@ void print_tree_in_order(t_node *tree){
 	}
 }
 /**
+* Search in tree
+*/
+
+t_node *search(t_node *tree, int to_search){
+	t_node *aux=tree;
+	if(aux == NULL){
+		return aux;
+	}
+	if(tree->value == to_search){
+		return aux;
+	}else{
+		if(tree->value > to_search){
+			aux=search(tree->right, to_search);
+		}else if(tree->value < to_search){
+			aux=search(tree->left, to_search);
+		}
+	}
+return aux;
+}
+
+/**
 *print tree pre order
 */
 void print_tree_pre_order (t_node *tree){
@@ -157,7 +178,15 @@ int main(int argc, char *argv[]){
     int array[SIZE]={50,100,25,150,75,35,15,20,85,10};
 	tree= array_to_tree(array);	
 //	print_tree(tree);
-	print_tree_in_order(tree);
+//	print_tree_in_order(tree);
+	t_node *aux=search(tree,100);
+	if(aux != NULL){
+		printf("%d\n", aux->value);
+	}
+	aux=search(tree, 9);
+	if(aux == NULL){
+		printf("not found");
+	}
 //    printf("%d", given_array_get_root(array));
 
 }
