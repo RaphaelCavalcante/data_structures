@@ -16,6 +16,7 @@
 typedef struct node t_node;
 struct node{
 	int value;
+	int l;
 	t_node *left;
 	t_node *right;
 	t_node *root;
@@ -170,6 +171,20 @@ void print_tree_pre_order (t_node *tree){
 		print_tree_pre_order(tree->right);
 	}
 }
+/**
+*print in tree format
+*/
+void print(t_node *t, int level)
+{
+    int l = level;
+
+    if (t == NULL) return;
+
+	print(t->left, level + 1);
+    while (l--) printf("    ");
+    printf("-> %d\n", t->value);
+    print(t->right, level + 1);
+}
 /************
 *  MAIN     *
 *************/
@@ -177,6 +192,7 @@ int main(int argc, char *argv[]){
     t_node *tree=NULL;
     int array[SIZE]={50,100,25,150,75,35,15,20,85,10};
 	tree= array_to_tree(array);	
+	print(tree, 0);
 //	print_tree(tree);
 //	print_tree_in_order(tree);
 	t_node *aux=search(tree,100);
